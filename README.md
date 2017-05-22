@@ -3,11 +3,16 @@
 
 # Question 1 (Naked Twins)
 Q: How do we use constraint propagation to solve the naked twins problem?  
-A: *Student should provide answer here*
+A: For each unit group (column, row, square, and dialog), we find whether there exists boxes allow exactly only two values.
+   For example, when consider first column unit if A1 and A2 has possible value '23' and A5 has possible value '35'.
+   Although we do not know the exact value of A1 and A2, we know that it should be either 2 or 3.
+   Hence, we know that A5 is not equal to 3 and can be reduced to 5
+
 
 # Question 2 (Diagonal Sudoku)
 Q: How do we use constraint propagation to solve the diagonal sudoku problem?  
-A: *Student should provide answer here*
+A: When we consider the box that falls in the diagonal of sudoku and try to reduce, add one more constraint that the number should be appeared exactly once
+   For the box E5, we need to consider both diagonal
 
 ### Install
 
