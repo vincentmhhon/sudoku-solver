@@ -28,44 +28,17 @@ def naked_twins(values):
 
     # Find all instances of naked twins
     # Eliminate the naked twins as possibilities for their peers
-    two_elements_boxes = [box for box in values.keys() if len(values[box]) == 2]
 
-    for box in two_elements_boxes:
-        row_peers, col_peers,  square_peers, diagonal_peers = unit_peers(box)
-        values = naked_twins_by_unit(values, row_peers)
-        values = naked_twins_by_unit(values, col_peers)
-        values = naked_twins_by_unit(values, square_peers)
-        values = naked_twins_by_unit(values, diagonal_peers)
-
-    return values
-
-
-def unit_peers(box):
-    """Obtain peers grouped by unit"""
-    row_peers = [row_unit for row_unit in row_units if box in row_unit][0]
-    col_peers = [col_unit for col_unit in column_units if box in col_unit][0]
-    square_peers = [square_unit for square_unit in square_units if box in square_unit][0]
-    if box in l_diagonal_units[0] and box in r_diagonal_units[0]:
-        diagonal_peers = l_diagonal_units[0] + r_diagonal_units[0]
-    elif box in l_diagonal_units[0]:
-        diagonal_peers = l_diagonal_units[0]
-    elif box in r_diagonal_units[0]:
-        diagonal_peers = r_diagonal_units[0]
-    else:
-        diagonal_peers = []
-
-    return row_peers, col_peers, square_peers, diagonal_peers
-
-
-def naked_twins_by_unit(values, peers):
-    peers_values = [values[peer] for peer in peers]
-    peers_values_count = dict((x, peers_values.count(x)) for x in peers_values)
-    for k, v in peers_values_count.items():
-        if len(k) == 2 and v > 1:
-            for c in k:
-                for peer in peers:
-                    if len(values[peer]) > 2:
-                        values[peer] = values[peer].replace(c, "")
+    for box in boxes:
+        if len(values[box]) == 2:
+            for unit in units[box]:
+                for peer in set(unit).intersection(peers[box]):
+                    if values[box] == values[peer]:
+                        naked_twins_value = values[box]
+                        for item in set(unit).difference(set([box, peer])):
+                            for digit in naked_twins_value:
+                                if len(values[item]) >= 2:
+                                    values[item] = values[item].replace(digit, "")
 
     return values
 
